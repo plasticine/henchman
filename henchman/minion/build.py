@@ -7,5 +7,9 @@ class Build(object):
         self.build = build
         self.steps = self.wrap_build_steps()
 
+    @property
+    def cwd(self):
+        return self.build['cwd']
+
     def wrap_build_steps(self):
-        return [Step(step) for step in self.build['steps']]
+        return [Step(self.cwd, c) for c in self.build['steps']]

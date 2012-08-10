@@ -9,10 +9,10 @@ class Step(object):
     """
     Steps represent single component commands in a build.
     """
-    def __init__(self, command):
+    def __init__(self, cwd, command):
+        self.cwd         = cwd
         self.command     = command
-        self.stdin_pipe  = PIPE
-        self.stdout_pipe = PIPE
+        self.cwd_command = "cd %s; %s;" % (cwd, command)
         self.returncode  = WAITING
 
     @property
@@ -26,11 +26,10 @@ class Step(object):
 
     def execute(self):
         self._process = Popen(
-            self.command,
-            cwd     = self.cwd,
+            self.cwd_command,
             shell   = True,
-            stdout  = self.stdin_pipe,
-            stdin   = self.stdout_pipe
+            stdout  = PIPE,
+            stdin   = PIPE
         )
         self._stdout, self._stderr = self._process.communicate(None)
         self.returncode = self._process.returncode
