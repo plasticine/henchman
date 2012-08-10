@@ -1,6 +1,5 @@
-from step import Step, WAITING, PASSED, FAILED
+from ..step import Step, WAITING, PASSED, FAILED
 from nose.tools import assert_equal
-from nose.exc import SkipTest
 
 
 class TestStep(object):
@@ -15,11 +14,3 @@ class TestStep(object):
 
         step.returncode = 1
         assert_equal(step.state, FAILED)
-
-
-class TestCode(object):
-    raise SkipTest
-
-
-class TestMinion(object):
-    raise SkipTest
