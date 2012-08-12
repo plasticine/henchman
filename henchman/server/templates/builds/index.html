@@ -1,5 +1,18 @@
 {% extends "_base.html" %}
 
 {% block main %}
-  BuildViews index
+  <h2>BuildViews index</h2>
+  <ul>
+    {% for minion in queue %}
+      <li>
+        <strong>{{ minion }}</strong>
+        <ul>
+            <li><code>uuid:       {{ minion.build.uuid }}</code></li>
+            <li><code>cwd:        {{ minion.build.cwd }}</code></li>
+            <li><code>refspec:    {{ minion.build.refspec }}</code></li>
+            <li><code>repo_url:   {{ minion.build.repo_url }}</code></li>
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
 {% endblock main %}

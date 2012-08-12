@@ -10,7 +10,7 @@ class BuildViews(MethodView):
     def get(self, build_uuid):
         if build_uuid is None:
             # show a list of all builds
-            return render_template('builds/index.html')
+            return render_template('builds/index.html', queue=henchman._queue)
         else:
             # show a single build
             return render_template('builds/show.html', build_uuid=build_uuid)

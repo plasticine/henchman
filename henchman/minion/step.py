@@ -1,6 +1,6 @@
 from subprocess import Popen, PIPE
 
-WAITING = None
+PENDING = None
 PASSED = 'passed'
 FAILED = 'failed'
 
@@ -13,12 +13,12 @@ class Step(object):
         self.cwd         = u"%s" % cwd
         self.command     = u"%s" % command
         self.cwd_command = u"cd %s; %s;" % (cwd, command)
-        self.returncode  = WAITING
+        self.returncode  = PENDING
 
     @property
     def state(self):
         if self.returncode == None:
-            return WAITING
+            return PENDING
         elif self.returncode == 0:
             return PASSED
         elif self.returncode != 0 or self.returncode > 0:

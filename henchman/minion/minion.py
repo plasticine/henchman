@@ -25,7 +25,11 @@ class Minion(Greenlet):
     def _run(self):
         self.code.update()
         # self.snakefile.read()
-        # self.cleanup()
+        self._run_build_steps()
+        self._cleanup()
 
-    def cleanup(self):
+    def _run_build_steps(self):
+        pass
+
+    def _cleanup(self):
         pass

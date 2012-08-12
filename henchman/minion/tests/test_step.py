@@ -1,4 +1,4 @@
-from ..step import Step, WAITING, PASSED, FAILED
+from ..step import Step, PENDING, PASSED, FAILED
 from nose.tools import assert_equal
 from tempfile import mkdtemp
 
@@ -11,7 +11,7 @@ class TestStep(object):
         step = Step(cwd=self.temp_dir, command="ls")
 
         # the default returncode state is None
-        assert_equal(step.state, WAITING)
+        assert_equal(step.state, PENDING)
 
         step.returncode = 0
         assert_equal(step.state, PASSED)
