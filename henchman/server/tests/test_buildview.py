@@ -1,7 +1,4 @@
 from ..tests import FlaskTest
-import os
-import tempfile
-from nose.exc import SkipTest
 
 
 class TestBuildView(FlaskTest):
