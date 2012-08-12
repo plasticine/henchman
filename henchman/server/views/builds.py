@@ -8,16 +8,16 @@ class BuildViews(MethodView):
             return "BuildViews index"
         else:
             # expose a single user
-            return "BuildViews show"
+            return "BuildViews show id:%s" % build_id
 
     def post(self):
         # create a new user
-        return "BuildViews create"
+        return "BuildViews post"
 
-    def delete(self, user_id):
+    def delete(self, build_id):
         # delete a single user
-        return "BuildViews delete"
+        return "BuildViews delete id:%s" % build_id
 
-    def put(self, user_id):
+    def put(self, build_id):
         # update a single user
-        return "BuildViews edit"
+        return "BuildViews put id:%s" % build_id

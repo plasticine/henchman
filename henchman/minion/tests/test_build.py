@@ -16,7 +16,7 @@ class TestBuild(object):
             'steps': ['foo', 'bar']
         })
 
-        wrapped_steps = build.wrap_build_steps()
+        wrapped_steps = build._wrap_build_steps()
         assert_equal(len(wrapped_steps), 2)
         assert isinstance(wrapped_steps[0], Step)
         assert isinstance(wrapped_steps[1], Step)
