@@ -10,9 +10,9 @@ class Step(object):
     Steps represent single component commands in a build.
     """
     def __init__(self, cwd, command):
-        self.cwd         = cwd
-        self.command     = command
-        self.cwd_command = "cd %s; %s;" % (cwd, command)
+        self.cwd         = u"%s" % cwd
+        self.command     = u"%s" % command
+        self.cwd_command = u"cd %s; %s;" % (cwd, command)
         self.returncode  = WAITING
 
     @property

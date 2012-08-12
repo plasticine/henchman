@@ -12,7 +12,7 @@ class TestCode(object):
         self.build_fixture = {
             'steps': ['foo', 'bar'],
             'refspec': 'master',
-            'repo_url': 'git@github.com:plasticine/henchman.git'
+            'repo_url': ['git@github.com:plasticine/henchman.git']
         }
         self.build = Build(self.build_fixture)
 

@@ -1,6 +1,7 @@
 from flask.views import MethodView
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, abort
 from henchman import Henchman
+from henchman.minion.build import InvalidBuildPostData
 
 henchman = Henchman()
 
@@ -15,9 +16,16 @@ class BuildViews(MethodView):
             return render_template('builds/show.html', build_uuid=build_uuid)
 
     def post(self):
-        # create a new user
-        # self._add_build(build_data=request.form)
-        return 'BuildViews post'
+        """
+        Attempt to create a new build from the post data, catch it if it is
+        malformed and a InvalidBuildPostData exception is raised.
+        """
+        try:
+            minion = henchman.create_minion_for_build(dict(request.form))
+            build_url = url_for('builds', _method='GET', build_uuid=minion.build.uuid)
+            return redirect(build_url)
+        except InvalidBuildPostData:
+            abort(400)
 
     def delete(self, build_uuid):
         # delete a single user
@@ -25,11 +33,3 @@ class BuildViews(MethodView):
 
     def put(self, build_uuid):
         raise NotImplementedError()
-
-    # def _add_build(self, build_data):
-    #     """
-    #     Add the build data to the Henchman queue.
-    #     """
-    #     minion = henchman.create_minion_for_build(build_data)
-    #     url_for('builds', build_uuid=minion.build.uuid)
-    #     return redirect()
