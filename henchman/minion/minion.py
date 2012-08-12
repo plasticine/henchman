@@ -18,14 +18,14 @@ class Minion(Greenlet):
     """
     def __init__(self, build_data):
         Greenlet.__init__(self)
-        self.build     = Build(self.build_data)
+        self.build     = Build(build_data)
         self.code      = Code(self.build)
-        self.snakefile = Snakefile(self.build)
+        # self.snakefile = Snakefile(self.build)
 
     def _run(self):
         self.code.update()
-        self.snakefile.read()
-        self.cleanup()
+        # self.snakefile.read()
+        # self.cleanup()
 
     def cleanup(self):
         pass

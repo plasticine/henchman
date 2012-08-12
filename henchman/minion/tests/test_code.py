@@ -10,18 +10,15 @@ from ..build import Build
 class TestCode(object):
     def setup(self):
         self.build_fixture = {
-            'id': 1,
-            'project': 'Test_project',
-            'cwd': mkdtemp(),
             'steps': ['foo', 'bar'],
             'refspec': 'master',
             'repo_url': 'git@github.com:plasticine/henchman.git'
         }
         self.build = Build(self.build_fixture)
 
-    def test_repo_clone_root(self):
-        code = Code(self.build)
-        assert_equal(code._repo_clone_root, path.join(Settings().build_root, self.build.uuid))
+    def _delete_build_cwd(self, build):
+        if path.exists(build.cwd):
+            rmdir(build.cwd)
 
     @raises(GitCommandNotFound)
     def test_which_git(self):
@@ -56,9 +53,8 @@ class TestCode(object):
         code._reset = Mock()
         code._check_response_status = Mock()
 
-        if path.exists(code._repo_clone_root):
-            rmdir(code._repo_clone_root)
-        makedirs(code._repo_clone_root)
+        self._delete_build_cwd(self.build)
+        makedirs(self.build.cwd)
         code.update()
 
         code._reset.assert_called_once_with()
@@ -73,8 +69,7 @@ class TestCode(object):
         code._reset = Mock()
         code._check_response_status = Mock()
 
-        if path.exists(code._repo_clone_root):
-            rmdir(code._repo_clone_root)
+        self._delete_build_cwd(self.build)
 
         code.update()
 

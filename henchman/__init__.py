@@ -7,9 +7,11 @@ class Henchman(object):
 
     __shared_state = {}
 
-    def __init__(self,):
+    def __init__(self):
         self.__dict__ = self.__shared_state
-        self.queue = Queue()
+        self._queue = Queue()
 
-    def add_build(self, build_data):
-        self.queue = self.queue.append(Minion(build_data))
+    def create_minion_for_build(self, build_data):
+        minion = Minion(build_data)
+        self._queue = self._queue.append(minion)
+        return minion

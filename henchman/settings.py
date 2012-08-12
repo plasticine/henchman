@@ -29,3 +29,6 @@ class Settings(object):
     @property
     def build_root(self):
         return ensure_exists(self.tmp_root, 'builds')
+
+
+settings = Settings()

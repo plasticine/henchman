@@ -4,7 +4,7 @@ from tempfile import mkdtemp
 
 
 class TestStep(object):
-    def __init__(self):
+    def setup(self):
         self.temp_dir = mkdtemp()
 
     def test_state(self):
