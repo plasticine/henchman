@@ -1,6 +1,6 @@
 class Queue(object):
     """
-    An instance of Buildqueue represents
+    An instance of Queue represents
     """
 
     def __init__(self, queue=tuple()):
@@ -14,13 +14,13 @@ class Queue(object):
 
     def append(self, build):
         """
-        Add an item to the internal queue and return a new BuildQueue
+        Add an item to the internal queue and return a new Queue
         """
-        return BuildQueue(list(self._queue) + [build])
+        return Queue(list(self._queue) + [build])
 
     def next(self):
         """
-        Get the next build in the queue and return a new BuildQueue instance
+        Get the next build in the queue and return a new Queue instance
         as a tuple
         """
-        return (list(self._queue).pop(0), BuildQueue(self._queue[1:]))
+        return (list(self._queue).pop(0), Queue(self._queue[1:]))
