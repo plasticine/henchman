@@ -1,4 +1,4 @@
-class BuildQueue(object):
+class Queue(object):
     """
     An instance of Buildqueue represents
     """

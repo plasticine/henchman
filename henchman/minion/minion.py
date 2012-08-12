@@ -16,9 +16,9 @@ class Minion(Greenlet):
     - Clean up git repo?
     - Save necessary things to DB.
     """
-    def __init__(self, build):
+    def __init__(self, build_data):
         Greenlet.__init__(self)
-        self.build     = Build(self.build)
+        self.build     = Build(self.build_data)
         self.code      = Code(self.build)
         self.snakefile = Snakefile(self.build)
 
