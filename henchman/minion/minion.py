@@ -1,7 +1,7 @@
 from gevent import Greenlet
 from build import Build
 from code import Code
-from snakefile import Snakefile
+# from snakefile import Snakefile
 
 
 class Minion(Greenlet):

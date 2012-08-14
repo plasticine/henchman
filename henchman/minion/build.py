@@ -3,6 +3,7 @@ from os import path
 from voluptuous import Schema, InvalidList, required, all, length, optional
 from .step import Step
 from henchman.settings import settings
+from henchman.utils.memoize import memoized
 
 
 class InvalidBuildPostData(Exception):
@@ -21,7 +22,6 @@ class Build(object):
     })
 
     def __init__(self, build_data):
-        self._steps = None
         self._validate_build_data(build_data)
         self.build_data = build_data
 
@@ -35,16 +35,16 @@ class Build(object):
             raise InvalidBuildPostData(err)
 
     @property
+    @memoized
     def uuid(self):
         steps_id = u'-'.join([u"%s" % s for s in self.build_data['steps']])
         uuid = u"%s:%s:%s" % (self.repo_url, self.refspec, steps_id)
         return hashlib.sha224(uuid).hexdigest()[:7]
 
     @property
+    @memoized
     def steps(self):
-        if self._steps is None:
-            self._steps = self._wrap_build_steps()
-        return self._steps
+        return self._wrap_build_steps()
 
     @property
     def cwd(self):
