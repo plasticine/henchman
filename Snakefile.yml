@@ -1,0 +1,16 @@
+----
+id: "test"
+name: 'Nose Tests'
+build:
+  pre_build:
+    - 'find . -iname "*.pyc" --delete'
+  steps:
+    - 'nosetests henchman'
+----
+id: "coverage"
+name: "Coverage"
+build:
+  pre_build:
+    - 'find . -iname "*.pyc" --delete'
+  steps:
+    'coverage report -m'

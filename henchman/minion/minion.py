@@ -1,7 +1,7 @@
 from gevent import Greenlet
-from build import Build
-from code import Code
-# from snakefile import Snakefile
+from .build import Build
+from .code import Code
+from .snakefile.snakefile import Snakefile
 
 
 class Minion(Greenlet):
@@ -20,11 +20,11 @@ class Minion(Greenlet):
         Greenlet.__init__(self)
         self.build     = Build(build_data)
         self.code      = Code(self.build)
-        # self.snakefile = Snakefile(self.build)
+        self.snakefile = Snakefile(self.build)
 
     def _run(self):
         self.code.update()
-        # self.snakefile.read()
+        # self.snakefile.parse()
         self._run_build_steps()
         self._cleanup()
 

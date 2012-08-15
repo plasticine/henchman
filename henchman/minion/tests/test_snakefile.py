@@ -1,7 +1,9 @@
-from henchman.utils import here
-from ..snakefile import Snakefile, Task, SnakeFileMissingError, SnakeFileValidationError, SnakeFileYamlError, SnakeFileTaskUndefined
 from nose.tools import assert_equal, assert_not_equal, raises
 from nose.exc import SkipTest
+from henchman.utils import here
+from ..snakefile.snakefile import Snakefile
+from ..snakefile.task import Task
+from ..snakefile.exceptions import SnakeFileMissingError, SnakeFileValidationError, SnakeFileYamlError, SnakeFileTaskUndefined
 
 
 class TestSnakefile(object):
