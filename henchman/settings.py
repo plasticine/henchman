@@ -1,16 +1,4 @@
-import os
-
-
-def ensure_exists(*paths):
-    path = os.path.abspath(os.path.join(*paths))
-    if not os.path.exists(path):
-        os.makedirs(path)
-    return path
-
-
-def here(*paths):
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), *paths))
-
+from .utils import here, ensure_exists
 
 
 class Settings(object):
@@ -29,6 +17,5 @@ class Settings(object):
     @property
     def build_root(self):
         return ensure_exists(self.tmp_root, 'builds')
-
 
 settings = Settings()

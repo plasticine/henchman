@@ -1,0 +1,4 @@
+name: "Basic Snakefile with only required fields"
+build:
+  steps:
+    - "echo 'foo'"

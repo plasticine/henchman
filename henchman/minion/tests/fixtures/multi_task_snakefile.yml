@@ -1,0 +1,16 @@
+---
+name: "I am the first task"
+build:
+  steps:
+    - "echo 'first'"
+---
+id: "hamburger"
+name: "I am the second task"
+build:
+  steps:
+    - "echo 'second'"
+---
+name: "I am the third task"
+build:
+  steps:
+    - "echo 'third'"

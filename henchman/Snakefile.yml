@@ -1,0 +1,6 @@
+snakefile:
+  build:
+    pre_build:
+    steps:
+      "nosetests henchman"
+    post_build:
