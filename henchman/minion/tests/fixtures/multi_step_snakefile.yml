@@ -1,0 +1,6 @@
+name: "Basic Snakefile with multiple steps"
+build:
+  steps:
+    - "echo '1'"
+    - "echo '2'"
+    - "echo '3'"

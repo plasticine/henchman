@@ -1,0 +1,4 @@
+name: "I am an invalid snakefile"
+build:
+  pre_build:
+    - "lol"
