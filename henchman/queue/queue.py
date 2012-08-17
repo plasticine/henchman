@@ -1,4 +1,4 @@
-from ..minion.minion import Minion, RUNNING
+from ..minion.minion import RUNNING
 
 
 class Queue(object):
@@ -19,11 +19,11 @@ class Queue(object):
     def idle(self):
         return len(filter(lambda x: x.state == RUNNING, self._queue)) == 0
 
-    def append(self, build):
+    def append(self, minion):
         """
-        Add an item to the internal queue and return a new Queue
+        Add a minion to the internal queue and return a new Queue
         """
-        return Queue(list(self._queue) + [build])
+        return Queue(list(self._queue) + [minion])
 
     def next(self):
         """
