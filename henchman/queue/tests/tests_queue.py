@@ -5,6 +5,35 @@ from nose.tools import assert_not_equal
 from mock import MagicMock
 
 
+class TestQueueState(object):
+    def setup(self):
+        self.queue = Queue()
+        self.m1 = MagicMock()
+        self.m2 = MagicMock()
+        self.m3 = MagicMock()
+        self.m1.state = PENDING
+        self.m2.state = PENDING
+        self.m3.state = PENDING
+
+    def test_queue_empty(self):
+        self.queue._queue = ()
+        assert_equal(self.queue.idle, True)
+
+    def test_queue_pending(self):
+        self.queue._queue = (self.m1, self.m2, self.m3,)
+        assert_equal(self.queue.idle, True)
+
+    def test_queue_finished(self):
+        self.m2.state = FINISHED
+        self.queue._queue = (self.m1, self.m2, self.m3,)
+        assert_equal(self.queue.idle, True)
+
+    def test_queue_running(self):
+        self.m2.state = RUNNING
+        self.queue._queue = (self.m1, self.m2, self.m3,)
+        assert_equal(self.queue.idle, False)
+
+
 class TestQueue(object):
     def test_immutable(self):
         """
@@ -17,27 +46,6 @@ class TestQueue(object):
         assert_equal(len(queue), 0)
         assert_equal(len(new_queue), 1)
         assert_not_equal(queue, new_queue)
-
-    def test_queue_idle(self):
-        queue = Queue()
-        minion1 = MagicMock()
-        minion2 = MagicMock()
-        minion3 = MagicMock()
-        minion1.state = PENDING
-        minion2.state = PENDING
-        minion3.state = PENDING
-
-        queue._queue = (minion1, minion2, minion3,)
-        assert_equal(queue.idle, True)
-
-        minion2.state = FINISHED
-        queue._queue = (minion1, minion2, minion3,)
-        assert_equal(queue.idle, True)
-
-        minion2.state = RUNNING
-        queue._queue = (minion1, minion2, minion3,)
-        assert_equal(queue.idle, False)
-
 
     def test_append(self):
         queue = Queue()
