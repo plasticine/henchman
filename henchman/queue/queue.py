@@ -1,3 +1,6 @@
+from ..minion.minion import Minion, RUNNING
+
+
 class Queue(object):
     """
     An instance of Queue represents
@@ -11,6 +14,10 @@ class Queue(object):
 
     def __getitem__(self, key):
         return self._queue[key]
+
+    @property
+    def idle(self):
+        return len(filter(lambda x: x.state == RUNNING, self._queue)) == 0
 
     def append(self, build):
         """

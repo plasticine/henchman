@@ -3,6 +3,10 @@ from .build import Build
 from .code import Code
 from .snakefile.snakefile import Snakefile
 
+PENDING  = 0
+RUNNING  = 1
+FINISHED = 2
+
 
 class Minion(Greenlet):
     """
@@ -18,11 +22,13 @@ class Minion(Greenlet):
     """
     def __init__(self, build_data):
         Greenlet.__init__(self)
+        self.state     = PENDING
         self.build     = Build(build_data)
         self.code      = Code(self.build)
         self.snakefile = Snakefile(self.build)
 
     def _run(self):
+        self._state = RUNNING
         self.code.update()
         # self.snakefile.parse()
         self._run_build_steps()
@@ -32,4 +38,4 @@ class Minion(Greenlet):
         pass
 
     def _cleanup(self):
-        pass
+        self._state = FINISHED
