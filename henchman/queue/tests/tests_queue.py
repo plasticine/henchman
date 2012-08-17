@@ -60,9 +60,19 @@ class TestQueue(object):
 
     def test_next(self):
         queue = Queue().append('foo').append('bar').append('ram')
-        build, new_queue = queue .next()
-
-        assert_equal(build, 'foo')
         assert_equal(len(queue), 3)
-        assert_equal(len(new_queue), 2)
-        assert_not_equal(queue, new_queue)
+
+        b1, q1 = queue.next()
+        assert_equal(b1, 'foo')
+        assert_equal(len(q1), 2)
+        assert_not_equal(queue, q1)
+
+        b2, q2 = q1.next()
+        assert_equal(b2, 'bar')
+        assert_equal(len(q2), 1)
+        assert_not_equal(q1, q2)
+
+        b3, q3 = q2.next()
+        assert_equal(b3, 'ram')
+        assert_equal(len(q3), 0)
+        assert_not_equal(q2, q3)
