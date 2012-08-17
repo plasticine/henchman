@@ -1,5 +1,7 @@
+from .utils.logs import log
 from .queue.queue import Queue
 from .minion.minion import Minion
+from .settings import settings
 
 
 class Henchman(object):
