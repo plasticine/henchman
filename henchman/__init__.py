@@ -13,23 +13,27 @@ class Henchman(object):
 
     def __init__(self):
         self.__dict__ = self.__shared_state
-        self.log = log
-        self._queue = Queue()
-        self._start_queue()
+        self._run()
 
     def create_minion_for_build(self, build_data):
         minion = Minion(build_data)
+        self.log.info('minion added to queue')
         self._queue = self._queue.append(minion)
         return minion
 
-    def _start_queue(self):
+    def _run(self):
         if self.__monitor is None:
+            self.log = log
+            self.log.info('hechman starting up')
+            self._queue = Queue()
             self.__monitor = gevent.spawn(self._monitor_queue)
 
     def _monitor_queue(self):
+        self.log.info('starting queue monitor')
         while True:
             if self._queue.idle and len(self._queue) > 0:
                 minion, queue = self._queue.next()
                 self._queue = queue
+                self.log.info('minion has been put to work')
                 minion.start()
             gevent.sleep(settings.queue.poll_interval)
