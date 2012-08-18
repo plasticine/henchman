@@ -1,2 +1,2 @@
 queue:
-  poll_interval: 10
+  poll_interval: 5

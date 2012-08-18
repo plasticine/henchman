@@ -53,6 +53,7 @@ class Code(object):
         self.git_binary = self._which_git()
         if self.git_binary:
             if self._repo_exists_for_build():
+                self._fetch()
                 self._reset()
             else:
                 self._clone()
@@ -70,11 +71,20 @@ class Code(object):
             return response.stdout
         raise GitCommandNotFound(response.stderr)
 
+    def _fetch(self):
+        """
+        git fetch
+        """
+        print 'Code._fetch()'
+        cmd = "cd %s && %s fetch" % (self.build.cwd, self.git_binary)
+        return self._check_command_response(self._command(cmd))
+
     def _clone(self):
         """
         git clone repo path
         git reset --hard refspec
         """
+        print 'Code._clone()'
         cmd = "%s clone %s %s" % (self.git_binary, self.build.repo_url,
             self.build.cwd)
         return self._check_command_response(self._command(cmd))
@@ -83,6 +93,7 @@ class Code(object):
         """
         git reset --hard refspec
         """
+        print 'Code._reset()'
         cmd = "cd %s && %s reset --hard %s" % (self.build.cwd, self.git_binary,
             self.build.refspec)
         return self._check_command_response(self._command(cmd))
@@ -99,6 +110,7 @@ class Code(object):
         """
         Execute given command and return the process object
         """
+        print 'Code._command(): %s' % command
         proc = Popen(command, shell=True, stdout=PIPE, stdin=PIPE)
         stdout, stderr = proc.communicate(None)
         return Response(proc, stdout, stderr)

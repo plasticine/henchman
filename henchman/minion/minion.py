@@ -29,6 +29,7 @@ class Minion(Greenlet):
         self.snakefile = Snakefile(path.join(self.build.cwd, 'snakefile.yml'))
 
     def _run(self):
+        print 'Minion._run()'
         self._state = RUNNING
         self.code.update()
         self.snakefile.parse()
@@ -36,7 +37,10 @@ class Minion(Greenlet):
         self._cleanup()
 
     def _run_build_steps(self):
-        pass
+        print 'Minion._run_build_steps()'
+        for step in self.build.steps:
+            step.execute()
 
     def _cleanup(self):
+        print 'Minion._cleanup()'
         self._state = FINISHED

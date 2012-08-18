@@ -36,9 +36,11 @@ class Snakefile(object):
         return self.tasks[task]
 
     def parse(self):
+        print 'Snakefile.parse()'
         self.tasks = self._validate(self._load())
 
     def _load(self):
+        print 'Snakefile._load()'
         if path.exists(self.path):
             snakefile_file = file(self.path, 'r')
             try:
@@ -51,6 +53,7 @@ class Snakefile(object):
         raise SnakeFileMissingError()
 
     def _validate(self, snakefile_yaml):
+        print 'Snakefile._validate()'
         _tasks = []
         try:
             for task_yaml in snakefile_yaml:

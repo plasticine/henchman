@@ -65,11 +65,13 @@ class TestCode(object):
         """
         code = Code(self.build)
         code._clone = Mock()
+        code._fetch = Mock()
         code._reset = Mock()
         code._repo_exists_for_build = Mock(return_value=True)
 
         code.update()
 
+        code._fetch.assert_called_once_with()
         code._reset.assert_called_once_with()
         assert not code._clone.called
 

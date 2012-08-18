@@ -25,6 +25,7 @@ class Step(object):
             return FAILED
 
     def execute(self):
+        print 'Step.execute(): %s' % self.cwd_command
         self._process = Popen(
             self.cwd_command,
             shell   = True,
