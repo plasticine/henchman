@@ -18,8 +18,8 @@ class Settings(object):
     def __init__(self):
         self.__dict__ = self.__shared_state
         self.settings = self._load(here('../settings.yml'))
-        self.logs_root = ensure_exists(here('../../../logs'))
-        self.tmp_root = ensure_exists(here('../../../tmp'))
+        self.logs_root = ensure_exists(here('../../logs'))
+        self.tmp_root = ensure_exists(here('../../tmp'))
         self.build_root = ensure_exists(path.join(self.tmp_root, 'builds'))
 
     def __getattr__(self, name):
