@@ -1,6 +1,7 @@
 from gevent import Greenlet
 from .build import Build
 from .code import Code
+from os import path
 from .snakefile.snakefile import Snakefile
 
 PENDING  = 0
@@ -25,12 +26,12 @@ class Minion(Greenlet):
         self.state     = PENDING
         self.build     = Build(build_data)
         self.code      = Code(self.build)
-        self.snakefile = Snakefile(self.build)
+        self.snakefile = Snakefile(path.join(self.build.cwd, 'snakefile.yml'))
 
     def _run(self):
         self._state = RUNNING
         self.code.update()
-        # self.snakefile.parse()
+        self.snakefile.parse()
         self._run_build_steps()
         self._cleanup()
 
