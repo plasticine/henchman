@@ -2,4 +2,5 @@ id: "test"
 name: "Build using nose"
 build:
   steps:
+    - "find . -iname '*.pyc' -delete"
     - "make test"
